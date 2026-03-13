@@ -30,7 +30,8 @@ docker-compose.override.yml
 BentoPDF_HA_app.html
 BentoPDF_HA_app_files/
 
-# Memory bank and Claude context files
+# Claude context files
+CLAUDE.md
 CLAUDE-activeContext.md
 CLAUDE-patterns.md
 CLAUDE-decisions.md
