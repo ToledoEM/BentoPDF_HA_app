@@ -11,16 +11,13 @@ init: false
 stage: stable
 tmpfs: true
 
-ingress: true
-ingress_port: 8099
-
 ports:
   8080/tcp: 8080
 ports_description:
-  8080/tcp: "BentoPDF Web UI (direct access)"
+  8080/tcp: "BentoPDF Web UI"
 
 webui: "http://[HOST]:[PORT:8080]"
-watchdog: "http://[HOST]:[PORT:8099]/"
+watchdog: "http://[HOST]:[PORT:8080]/"
 
 panel_icon: mdi:file-pdf-box
 panel_title: BentoPDF
