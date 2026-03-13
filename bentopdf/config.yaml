@@ -9,7 +9,6 @@ arch:
 startup: application
 init: false
 stage: stable
-tmpfs: true
 
 ports:
   8080/tcp: 8080

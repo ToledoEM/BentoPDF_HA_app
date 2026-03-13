@@ -4,7 +4,9 @@ FROM ${BUILD_FROM}
 ARG BUILD_VERSION
 
 # hadolint ignore=DL3018
-RUN apk add --no-cache nginx bash
+RUN apk add --no-cache nginx bash \
+    && mkdir -p /tmp/client_body /tmp/proxy /tmp/fastcgi /tmp/uwsgi /tmp/scgi \
+    && chown -R nginx:nginx /tmp/client_body /tmp/proxy /tmp/fastcgi /tmp/uwsgi /tmp/scgi
 
 COPY --from=ghcr.io/alam00000/bentopdf-simple:2.5.0 /usr/share/nginx/html /usr/share/nginx/html
 
