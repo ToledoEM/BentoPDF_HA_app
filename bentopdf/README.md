@@ -1,8 +1,10 @@
-<div align="right">
-  <img src="logo.png" alt="BentoPDF" width="120" height="120"/>
+# BentoPDF for Home Assistant
+
+<div align="left">
+  <img src="logo.png" alt="BentoPDF" width="100" height="100"/>
 </div>
 
-# BentoPDF for Home Assistant
+
 
 A privacy-first PDF toolkit running entirely in your browser — no uploads, no cloud, no tracking. All processing happens locally via WebAssembly. This add-on serves the BentoPDF web app from your Home Assistant instance so you can access it from anywhere on your network.
 
