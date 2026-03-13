@@ -5,8 +5,8 @@ ARG BUILD_VERSION
 
 # hadolint ignore=DL3018
 RUN apk add --no-cache nginx bash \
-    && mkdir -p /tmp/client_body /tmp/proxy /tmp/fastcgi /tmp/uwsgi /tmp/scgi \
-    && chown -R nginx:nginx /tmp/client_body /tmp/proxy /tmp/fastcgi /tmp/uwsgi /tmp/scgi
+    && sed -i 's/nginx:x:100:101/nginx:x:0:0/' /etc/passwd \
+    && sed -i 's/^nginx:x:101:/nginx:x:0:/' /etc/group
 
 COPY --from=ghcr.io/alam00000/bentopdf-simple:2.5.0 /usr/share/nginx/html /usr/share/nginx/html
 
