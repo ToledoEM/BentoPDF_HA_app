@@ -1,5 +1,5 @@
 ---
-title: "[DEPRECATED] Manyfold Home Assistant Add-on"
+title: "BentoPDF Home Assistant Add-on"
 format:
   html:
     toc: true
@@ -9,134 +9,45 @@ format:
     embed-resources: false
 ---
 
-> **This file is deprecated.** It documents the previous Manyfold add-on that this repository was originally based on. Kept as a structural reference only.
+A Home Assistant OS add-on that packages [BentoPDF](https://github.com/alam00000/bentopdf) v2.5.0 — a privacy-first, client-side PDF toolkit with 50+ tools. All PDF processing happens in the browser; files never leave your device.
 
-![Manyfold Home Assistant Add-on logo](manyfold_solo/logo.png){fig-alt="Manyfold Home Assistant Add-on logo" width="220"}
+## Installation
 
-## Overview
-
-This project provides a **Home Assistant OS add-on** for **Manyfold** (3D model manager), packaged around the `manyfold-solo` image with persistent storage and configurable host-backed library/index paths.
-
-It is designed for Home Assistant users who want to run Manyfold locally and manage 3D print files (STL, 3MF, and related assets) with a simple add-on install flow.
-
-- Add-on name: `Manyfold`
-- Slug: `manyfold_solo`
-- Web UI port: `3214`
-- Supported architectures: `amd64`, `aarch64`
-
-Primary documentation for Manyfold itself: [manyfold.app/get-started](https://manyfold.app/get-started/)
-
-## Features
-
-- Runs Manyfold on port `3214`
-- Persists app data, database, cache, and settings under Home Assistant add-on config storage (`/config`)
-- Supports configurable library and thumbnails/index paths on Home Assistant host storage
-- Validates configured paths and refuses startup when paths resolve outside allowed roots (`/share`, `/media`, `/config`)
-- No external PostgreSQL or Redis required for this add-on setup
-- Supports `amd64` and `aarch64`
-- Works with Home Assistant add-on repository flow
-
-## Repository Structure
-
-- `repository.yaml`: Home Assistant add-on repository manifest
-- `manyfold_solo/`: Add-on package consumed by Home Assistant OS
-- `manyfold_solo/config.yaml`: Add-on metadata, schema, defaults, ports, and options
-- `manyfold_solo/build.yaml`: Upstream image digests per architecture
-- `manyfold_solo/rootfs/`: Runtime scripts and service definitions for the containerized add-on
-
-## Default Paths
-
-The add-on defaults are configured for a first-run setup:
-
-- Library path: `/share/manyfold/models`
-- Thumbnails path: `/config/thumbnails`
-
-## Installation (Home Assistant Add-on Store)
-
-1. Open **Home Assistant**.
-2. Go to **Settings -> Add-ons -> Add-on Store**.
-3. Open the menu (`...`) and choose **Repositories**.
-4. Add your add-on repository URL:
-   - `https://github.com/ToledoEM/hassio-addons`
-5. Refresh the Add-on Store.
-6. Install **Manyfold**.
-7. Configure the add-on (the defaults are safe to start):
-   - `library_path: /share/manyfold/models`
-   - `thumbnails_path: /config/thumbnails`
-   - `secret_key_base: ""` (leave blank to auto-generate and persist)
-   - `puid` / `pgid` (set to a non-root user/group if needed)
-8. Start the add-on.
-9. Open the web UI at:
-   - `http://<HOME_ASSISTANT_IP>:3214`
+1. In Home Assistant, go to **Settings → Add-ons → Add-on Store**.
+2. Open the menu (`...`) → **Repositories**.
+3. Add this repository URL: `https://github.com/ToledoEM/BentoPDF_HA_app`
+4. Refresh the Add-on Store and install **BentoPDF**.
+5. Start the add-on and open the web UI at `http://<HA_IP>:8080`.
 
 ## Local Add-on Development (on HA Host)
 
-If you are testing directly on a Home Assistant host:
-
-1. Copy `manyfold_solo/` into `/addons/manyfold_solo` on the host.
-2. In the Add-on Store menu (`...`), click **Check for updates**.
+1. Copy `bentopdf/` into `/addons/bentopdf` on the HA host.
+2. In Add-on Store menu (`...`), click **Check for updates**.
 3. Install and run the local add-on.
 
-## Library and Index Workflow
+## Configuration Options
 
-1. Place your model files (`.stl`, `.3mf`, archives, etc.) into the configured library folder on the host.
-   - Default example: `/share/manyfold/models`
-2. In the Manyfold UI, configure a library that points to the same path exposed in the container.
-3. Manyfold scans and indexes files.
-4. Thumbnails and indexing artifacts are persisted in:
-   - `/config/thumbnails` (default)
+| Option | Default | Description |
+|--------|---------|-------------|
+| `log_level` | `info` | Log verbosity: `info`, `debug`, `warn`, `error` |
 
-## Add-on Configuration Options
+## Repository Layout
 
-The add-on supports the following configurable options (defined in `manyfold_solo/config.yaml`):
+- `repository.yaml` — HA add-on repository manifest
+- `bentopdf/` — Add-on package
+  - `config.yaml` — Add-on metadata, schema, ports
+  - `build.yaml` — Base image references per architecture
+  - `Dockerfile` — Container build
+  - `run.sh` — Startup script
+  - `rootfs/` — s6-overlay service definitions
 
-- `secret_key_base`: App secret (auto-generated when empty and persisted)
-- `puid`: User ID used for file ownership/permissions
-- `pgid`: Group ID used for file ownership/permissions
-- `multiuser`: Enable or disable Manyfold multi-user mode
-- `library_path`: Library path to scan/index
-- `thumbnails_path`: Persistent thumbnails/index artifacts path (must be under `/config`)
-- `log_level`: `info`, `debug`, `warn`, `error`
-- `web_concurrency`: Puma worker process count
-- `rails_max_threads`: Max threads per Puma worker
-- `default_worker_concurrency`: Sidekiq default queue concurrency
-- `performance_worker_concurrency`: Sidekiq performance queue concurrency
-- `max_file_upload_size`: Maximum uploaded archive size (bytes)
-- `max_file_extract_size`: Maximum extracted archive size (bytes)
+## Features
 
-## Example Configuration
-
-```yaml
-secret_key_base: ""
-puid: 1000
-pgid: 1000
-multiuser: true
-library_path: /share/manyfold/models
-thumbnails_path: /config/thumbnails
-log_level: info
-web_concurrency: 4
-rails_max_threads: 16
-default_worker_concurrency: 4
-performance_worker_concurrency: 1
-max_file_upload_size: 1073741824
-max_file_extract_size: 1073741824
-```
-
-## Validation and Safety Behavior
-
-The add-on performs path validation at startup:
-
-- `library_path` and `thumbnails_path` must resolve inside allowed mapped roots
-- Allowed roots are `/share`, `/media`, and `/config`
-- `thumbnails_path` must resolve under `/config` to ensure persistent storage
-- Startup fails if the configured library path is invalid or inaccessible
-
-## Networking
-
-- Web UI listens on port `3214`
-- Home Assistant add-on port mapping exposes `3214/tcp`
-- Default web UI URL pattern: `http://[HOST]:[PORT:3214]`
+- 50+ PDF tools (merge, split, compress, convert, OCR, sign, redact, and more)
+- Fully client-side — no data sent to any server
+- Serves on port `8080`
+- Supports `amd64` and `aarch64`
 
 ## License
 
-This repository is licensed under the MIT License. See `LICENSE` for details.
+MIT. Upstream BentoPDF is licensed under AGPL-3.0.

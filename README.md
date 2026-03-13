@@ -1,6 +1,6 @@
 # BentoPDF Home Assistant Add-on
 
-A Home Assistant OS add-on that packages [BentoPDF](https://github.com/alam00000/bentopdf) — a privacy-first, client-side PDF toolkit with 50+ tools. All PDF processing happens in the browser; files never leave your device.
+A Home Assistant OS add-on that packages [BentoPDF](https://github.com/alam00000/bentopdf) v2.5.0 — a privacy-first, client-side PDF toolkit with 50+ tools. All PDF processing happens in the browser; files never leave your device.
 
 ## Installation
 

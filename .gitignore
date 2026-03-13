@@ -27,8 +27,8 @@ temp/
 docker-compose.override.yml
 
 # Quarto rendered output (source .qmd files are kept)
-*.html
-*_files/
+BentoPDF_HA_app.html
+BentoPDF_HA_app_files/
 
 # Memory bank and Claude context files
 CLAUDE-activeContext.md
