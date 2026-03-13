@@ -1,5 +1,5 @@
 <div align="right">
-  <img src="logo.png" alt="BentoPDF" width="200"/>
+  <img src="logo.png" alt="BentoPDF" width="120" height="120"/>
 </div>
 
 # BentoPDF for Home Assistant

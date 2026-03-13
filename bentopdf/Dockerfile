@@ -4,12 +4,7 @@ FROM ${BUILD_FROM}
 ARG BUILD_VERSION
 
 # hadolint ignore=DL3018
-RUN apk add --no-cache nginx bash \
-    && chmod -R 777 /var/lib/nginx \
-    && mkdir -p /run/nginx \
-    && chmod 777 /run/nginx \
-    && mkdir -p /var/log/nginx \
-    && chmod 777 /var/log/nginx
+RUN apk add --no-cache nginx bash
 
 COPY --from=ghcr.io/alam00000/bentopdf-simple:2.5.0 /usr/share/nginx/html /usr/share/nginx/html
 
