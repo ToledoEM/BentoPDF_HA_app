@@ -8,7 +8,7 @@ A Home Assistant OS add-on that packages [BentoPDF](https://github.com/alam00000
 2. Open the menu (`...`) → **Repositories**.
 3. Add this repository URL: `https://github.com/ToledoEM/BentoPDF_HA_app`
 4. Refresh the Add-on Store and install **BentoPDF**.
-5. Start the add-on and open the web UI at `http://<HA_IP>:8080`.
+5. Start the add-on and open the web UI at `https://<HA_IP>:8443`.
 
 ## Local Add-on Development (on HA Host)
 
@@ -36,8 +36,13 @@ A Home Assistant OS add-on that packages [BentoPDF](https://github.com/alam00000
 
 - 50+ PDF tools (merge, split, compress, convert, OCR, sign, redact, and more)
 - Fully client-side — no data sent to any server
-- Serves on port `8080`
+- HTTPS on port `8443` (enables LibreOffice WASM / office file conversion on LAN IPs)
+- HTTP on port `8080` (watchdog only — redirects to HTTPS)
 - Supports `amd64` and `aarch64`
+
+## Browser Security Warning
+
+On first access, browsers will show a "potential security risk" warning. This is expected — the add-on uses a self-signed TLS certificate generated locally on your HA instance. Click **Advanced → Accept / Proceed** to continue. See [`bentopdf/DOCS.md`](bentopdf/DOCS.md) for the full explanation.
 
 ## License
 
