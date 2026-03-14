@@ -1,6 +1,10 @@
+# Global build args — must be declared before the first FROM to be usable in FROM instructions
+ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base:3.23
+ARG BUILD_VERSION=2.5.0
+
 # Stage 1: Download and extract the BentoPDF dist release (includes bundled WASM)
 FROM alpine:3.21 AS dist
-ARG BUILD_VERSION=2.5.0
+ARG BUILD_VERSION
 # hadolint ignore=DL3018
 RUN apk add --no-cache curl unzip \
     && curl -fsSL "https://github.com/alam00000/bentopdf/releases/download/v${BUILD_VERSION}/dist-${BUILD_VERSION}.zip" \
@@ -8,7 +12,6 @@ RUN apk add --no-cache curl unzip \
     && unzip /tmp/bentopdf.zip -d /tmp/dist
 
 # Stage 2: Final runtime image
-ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base:3.23
 FROM ${BUILD_FROM}
 
 ARG BUILD_VERSION
