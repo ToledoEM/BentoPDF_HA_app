@@ -7,6 +7,10 @@
 
 
 A privacy-first PDF toolkit running entirely in your browser — no uploads, no cloud, no tracking. All processing happens locally via WebAssembly. This add-on serves the BentoPDF web app from your Home Assistant instance so you can access it from anywhere on your network.
+      
+
+Now in the Custom alexbelgium/hassio-addons Add-on Store! 💪
+Search for "BentoPDF" and install directly from there and instructions how to add it to your Home Assistant instance. [link](https://github.com/alexbelgium/hassio-addons)
 
 ---
 
